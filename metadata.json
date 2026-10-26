@@ -1,0 +1,6 @@
+{
+  "name": "NextStep — Smart Internship & Career Management Portal",
+  "description": "NextStep connects students, recruiters, and administrators with intelligent internship matching, resume analysis, hiring pipelines, and career tools.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

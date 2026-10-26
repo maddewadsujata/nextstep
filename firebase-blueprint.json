@@ -1,0 +1,150 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["student", "recruiter", "admin"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "createdAt": { "type": "string" },
+        "avatarUrl": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role", "status", "createdAt"]
+    },
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Comprehensive student resume and academic profile",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "college": { "type": "string" },
+        "degree": { "type": "string" },
+        "branch": { "type": "string" },
+        "graduationYear": { "type": "string" },
+        "cgpa": { "type": "string" },
+        "skills": { "type": "array" },
+        "experienceLevel": { "type": "string" }
+      },
+      "required": ["userId", "fullName", "email", "college", "degree", "branch", "skills"]
+    },
+    "RecruiterProfile": {
+      "title": "RecruiterProfile",
+      "description": "Company and recruiter credentials profile",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "recruiterName": { "type": "string" },
+        "workEmail": { "type": "string" },
+        "companyName": { "type": "string" },
+        "verificationStatus": { "type": "string", "enum": ["verified", "pending", "rejected"] },
+        "location": { "type": "string" }
+      },
+      "required": ["userId", "recruiterName", "workEmail", "companyName", "verificationStatus"]
+    },
+    "Internship": {
+      "title": "Internship",
+      "description": "Internship job opportunity listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "companyName": { "type": "string" },
+        "recruiterId": { "type": "string" },
+        "stipend": { "type": "string" },
+        "stipendNumeric": { "type": "number" },
+        "duration": { "type": "string" },
+        "location": { "type": "string" },
+        "type": { "type": "string", "enum": ["Remote", "Hybrid", "On-site"] },
+        "openings": { "type": "number" },
+        "deadline": { "type": "string" },
+        "status": { "type": "string", "enum": ["published", "draft", "pending_approval", "closed", "rejected"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "companyName", "recruiterId", "stipend", "status", "deadline"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Student job application record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "internshipId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentEmail": { "type": "string" },
+        "status": { 
+          "type": "string", 
+          "enum": ["applied", "under_review", "shortlisted", "interview_scheduled", "offer_received", "accepted", "rejected", "withdrawn"] 
+        },
+        "appliedAt": { "type": "string" }
+      },
+      "required": ["id", "internshipId", "studentId", "status", "appliedAt"]
+    },
+    "AppNotification": {
+      "title": "AppNotification",
+      "description": "User notification event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "read", "createdAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Administrative audit trail",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "adminId": { "type": "string" },
+        "adminName": { "type": "string" },
+        "action": { "type": "string" },
+        "target": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "adminId", "action", "target", "details", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User account documents indexed by auth UID"
+    },
+    "/studentProfiles/{userId}": {
+      "schema": "StudentProfile",
+      "description": "Student candidate profiles and resumes"
+    },
+    "/recruiterProfiles/{userId}": {
+      "schema": "RecruiterProfile",
+      "description": "Recruiter and company profiles"
+    },
+    "/internships/{internshipId}": {
+      "schema": "Internship",
+      "description": "Internship postings"
+    },
+    "/applications/{applicationId}": {
+      "schema": "Application",
+      "description": "Student job applications"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "AppNotification",
+      "description": "User notification records"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Platform audit events"
+    }
+  }
+}
